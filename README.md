@@ -31,6 +31,8 @@ Projeto de análise comercial utilizando o banco de dados fictício **Contoso**,
 
 ### Página 1 — Vendas & Receita
 
+<img width="1118" height="636" alt="image" src="https://github.com/user-attachments/assets/82c3a0be-043b-40c0-8fc5-02cf8bb57380" />
+
 Visão geral da performance comercial da empresa ao longo do tempo.
 
 **KPIs:** Receita Bruta · Lucro Bruto · Margem de Lucro · Ticket Médio · Total de Pedidos
@@ -43,6 +45,9 @@ Visão geral da performance comercial da empresa ao longo do tempo.
 
 ### Página 2 — Clientes
 
+<img width="1022" height="574" alt="image" src="https://github.com/user-attachments/assets/0b991178-6e2e-4822-b23c-ffbe99cf282f" />
+
+
 Análise do perfil e comportamento da base de clientes.
 
 **KPIs:** Total de Clientes Únicos · Gasto Médio por Cliente · Média de Compras por Cliente
@@ -54,6 +59,9 @@ Análise do perfil e comportamento da base de clientes.
 ---
 
 ### Página 3 — Produtos
+
+<img width="1117" height="637" alt="image" src="https://github.com/user-attachments/assets/0b93b3a0-b8b6-4967-b3d0-fce4fd304e48" />
+
 
 Performance do portfólio de produtos por receita, volume e margem.
 
@@ -68,19 +76,19 @@ Performance do portfólio de produtos por receita, volume e margem.
 ## 🔍 Principais Insights
 
 ### Vendas & Receita
-- A receita apresentou **queda ao longo de 2007–2009**, período que coincide com a crise financeira global — o contexto macroeconômico é um fator relevante antes de atribuir o declínio à performance comercial interna.
+- A receita apresentou **queda ao longo de 2007–2009**, período que coincide com a crise financeira global,o contexto macroeconômico é um fator relevante antes de atribuir o declínio à performance comercial interna.
 - O canal **Online** apresenta receita significativamente inferior aos demais canais (Store, Reseller, Catalog), sinalizando oportunidade de investigação em marketing digital e logística de entrega.
 - A **Ásia** demonstra presença crescente no mapa de receita, representando uma oportunidade de expansão com menor saturação em comparação à Europa.
 
 ### Clientes
-- A **Alemanha** concentra o maior número de clientes registrados, porém os **Estados Unidos** geram maior receita total — indicando ticket médio mais alto no mercado americano, o que merece investigação sobre comportamento de compra por região.
+- A **Alemanha** concentra o maior número de clientes registrados, porém os **Estados Unidos** geram maior receita total, indicando ticket médio mais alto no mercado americano, o que merece investigação sobre comportamento de compra por região.
 - O segmento de **meia-idade** apresenta crescimento na base de clientes e representa uma oportunidade de público-alvo para campanhas de marketing, especialmente em categorias de tecnologia.
 - A média de **153 compras por cliente** reflete a característica do dataset (histórico longo com base reduzida de clientes), mas indica alto nível de retenção.
 
 ### Produtos
-- **Music, Movies & Audio** apresenta a **maior margem de lucro** entre as categorias, porém com volume de vendas relativamente baixo — há espaço para aumentar receita nessa categoria com ações de marketing direcionadas.
+- **Music, Movies & Audio** apresenta a **maior margem de lucro** entre as categorias, porém com volume de vendas relativamente baixo,há espaço para aumentar receita nessa categoria com ações de marketing direcionadas.
 - **Home Appliances** lidera em receita absoluta, enquanto **Computers Accessories** domina em volume de unidades vendidas.
-- A marca **Contoso** é a de maior lucro bruto, seguida de **Fabrikam** e **Litware** — concentração de resultado em poucas marcas.
+- A marca **Contoso** é a de maior lucro bruto, seguida de **Fabrikam** e **Litware**, concentração de resultado em poucas marcas.
 
 ### Recomendações
 1. **Investigar canal Online:** realizar análise de satisfação do cliente e tempo de entrega para identificar se o problema é aquisição ou retenção.
@@ -100,6 +108,5 @@ Performance do portfólio de produtos por receita, volume e margem.
 
 ---
 
-## 📝 Licença
-
-MIT License — veja o arquivo [LICENSE](LICENSE) para detalhes.
+**Autor** : Cauã de Godoy
+**Linkedin** : https://www.linkedin.com/in/caua-de-godoy/
