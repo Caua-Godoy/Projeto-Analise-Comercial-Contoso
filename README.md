@@ -109,4 +109,5 @@ Performance do portfólio de produtos por receita, volume e margem.
 ---
 
 **Autor** : Cauã de Godoy
+
 **Linkedin** : https://www.linkedin.com/in/caua-de-godoy/
