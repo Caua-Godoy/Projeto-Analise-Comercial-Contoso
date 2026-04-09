@@ -72,6 +72,11 @@ Performance do portfólio de produtos por receita, volume e margem.
 **Tabelas utilizadas:** `FactSales`, `DimProduct`, `DimProductSubcategory`, `DimProductCategory`
 
 ---
+## Modelagem
+<img width="1064" height="773" alt="image" src="https://github.com/user-attachments/assets/ba539969-1893-4423-b47c-9635e321004d" />
+
+---
+
 
 ## 🔍 Principais Insights
 
