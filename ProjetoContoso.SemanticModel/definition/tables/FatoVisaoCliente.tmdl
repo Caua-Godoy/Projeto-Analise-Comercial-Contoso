@@ -1,0 +1,74 @@
+table FatoVisaoCliente
+	lineageTag: c9a2d713-834e-4f17-8db8-b1732b643c7a
+
+	column ID_pais
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e2d8c93-bbfb-489c-913c-ca56c8ba122d
+		summarizeBy: none
+		sourceColumn: ID_pais
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_cidade
+		dataType: int64
+		formatString: 0
+		lineageTag: b707f71c-fee5-4b5e-8b73-e77b07616486
+		summarizeBy: none
+		sourceColumn: ID_cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalGasto
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 9fd454dd-bd76-4333-88f7-2e58d7b49930
+		summarizeBy: sum
+		sourceColumn: TotalGasto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column NumeroDeCompras
+		dataType: int64
+		formatString: 0
+		lineageTag: 6357b2c3-0125-4e2f-8362-54a70807c1b4
+		summarizeBy: sum
+		sourceColumn: NumeroDeCompras
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_cliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 926255bf-62e4-45c0-8209-c4a535f31314
+		summarizeBy: none
+		sourceColumn: ID_cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FatoVisaoCliente = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("localhost", "ContosoRetailDW", [Query="SELECT#(lf)    dc.CustomerKey AS ChaveCliente,#(lf)    dc.FirstName AS PrimeiroNome,#(lf)    dc.Gender AS Genero,#(lf)    dc.BirthDate AS DataNascimento,#(lf)    dg.CityName AS Cidade,#(lf)    dg.RegionCountryName AS Pais,#(lf)    SUM(fos.SalesAmount) AS TotalGasto,#(lf)    COUNT(fos.SalesOrderNumber) AS NumeroDeCompras#(lf)FROM FactOnlineSales fos#(lf)JOIN DimCustomer dc ON dc.CustomerKey  = fos.CustomerKey#(lf)JOIN DimGeography dg ON dg.GeographyKey = dc.GeographyKey#(lf)GROUP BY#(lf)    dc.CustomerKey,#(lf)    dc.FirstName,#(lf)    dc.Gender,#(lf)    dc.BirthDate,#(lf)    dg.CityName,#(lf)    dg.RegionCountryName"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"DataNascimento", type date}, {"TotalGasto", Currency.Type}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado",{{"ChaveCliente", "ID_cliente"}}),
+				    #"Consultas Mescladas" = Table.NestedJoin(#"Colunas Renomeadas", {"Cidade"}, DimCidade, {"Cidade"}, "DimCidade", JoinKind.Inner),
+				    #"Consultas Mescladas1" = Table.NestedJoin(#"Consultas Mescladas", {"Pais"}, DimPais, {"Pais"}, "DimPais", JoinKind.Inner),
+				    #"Consultas Mescladas2" = Table.NestedJoin(#"Consultas Mescladas1", {"ID_cliente"}, DimCliente, {"ID_cliente"}, "DimCliente", JoinKind.Inner),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Consultas Mescladas2",{"DimCliente"}),
+				    #"DimPais Expandido" = Table.ExpandTableColumn(#"Colunas Removidas", "DimPais", {"ID_pais"}, {"ID_pais"}),
+				    #"DimCidade Expandido" = Table.ExpandTableColumn(#"DimPais Expandido", "DimCidade", {"ID_cidade"}, {"ID_cidade"}),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(#"DimCidade Expandido",{"ID_cliente", "ID_pais", "ID_cidade", "PrimeiroNome", "Genero", "DataNascimento", "Cidade", "Pais", "TotalGasto", "NumeroDeCompras"}),
+				    #"Erros Removidos" = Table.RemoveRowsWithErrors(#"Colunas Reordenadas", {"PrimeiroNome"}),
+				    #"Linhas em Branco Removidas" = Table.SelectRows(#"Erros Removidos", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Colunas Removidas1" = Table.RemoveColumns(#"Linhas em Branco Removidas",{"Genero", "DataNascimento", "Cidade", "Pais", "PrimeiroNome"})
+				in
+				    #"Colunas Removidas1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

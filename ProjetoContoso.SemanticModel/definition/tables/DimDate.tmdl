@@ -1,0 +1,91 @@
+table DimDate
+	lineageTag: 5f124746-0d4c-4a93-8fb3-0f878188f3b0
+
+	column ID_data
+		dataType: int64
+		formatString: 0
+		lineageTag: 6d6021ee-71cc-434a-b50b-1239975a4bfc
+		summarizeBy: none
+		sourceColumn: ID_data
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataVenda
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 790fcf49-8db1-4ecc-8918-545b08a4de27
+		summarizeBy: none
+		sourceColumn: DataVenda
+
+		variation Variation
+			isDefault
+			relationship: 6733f8bf-eb32-4db4-a32d-2c1952dacc81
+			defaultHierarchy: LocalDateTable_6efd268a-e5fe-4883-971b-1cab5ef0d14c.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 626de171-886e-47b3-9484-92e0dadea12b
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = User
+
+	column Mes
+		dataType: int64
+		formatString: 0
+		lineageTag: 4fd02982-7875-4859-8e52-bc0b0d78b76b
+		summarizeBy: none
+		sourceColumn: Mes
+
+		annotation SummarizationSetBy = User
+
+	column Dia
+		dataType: int64
+		formatString: 0
+		lineageTag: 43a824ba-8d51-4852-a166-9b93c407a43d
+		summarizeBy: none
+		sourceColumn: Dia
+
+		annotation SummarizationSetBy = User
+
+	column NomeMes
+		dataType: string
+		lineageTag: e9cc62fd-2a0b-44e6-b340-3efc5b7a0874
+		summarizeBy: none
+		sourceColumn: NomeMes
+		sortByColumn: Mes
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("localhost", "ContosoRetailDW", [Query="SELECT #(lf)#(tab)CAST(fs.DateKey AS date) AS DataVenda,#(lf)#(tab)fs.SalesQuantity * fs.UnitPrice AS ReceitaBruta,#(lf)#(tab)fs.SalesQuantity * fs.UnitCost AS Custo,#(lf)#(tab)fs.SalesQuantity * fs.UnitPrice - fs.SalesQuantity * fs.UnitCost AS LucroBruto,#(lf)#(tab)SalesQuantity AS QuantidadeVendida,#(lf)#(tab)ChannelName AS Canal,#(lf)#(tab)StoreName AS Loja,#(lf)#(tab)RegionCountryName AS Regiao#(lf)FROM FactSales fs#(lf)JOIN DimChannel dc ON dc.ChannelKey = fs.channelKey#(lf)JOIN DimStore ds ON ds.StoreKey = fs.StoreKey#(lf)JOIN DimGeography dg ON dg.GeographyKey = ds.GeographyKey"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"DataVenda", type date}, {"ReceitaBruta", Currency.Type}, {"Custo", Currency.Type}, {"LucroBruto", Currency.Type}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado",{"DataVenda"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Outras Colunas Removidas", each true),
+				    #"Linhas Classificadas" = Table.Sort(#"Linhas Filtradas",{{"DataVenda", Order.Ascending}}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Linhas Classificadas"),
+				    #"Índice Adicionado" = Table.AddIndexColumn(#"Duplicatas Removidas", "Índice", 837, 18, Int64.Type),
+				    #"Personalização Adicionada" = Table.AddColumn(#"Índice Adicionado", "Ano", each Date.Year([DataVenda])),
+				    #"Personalização Adicionada1" = Table.AddColumn(#"Personalização Adicionada", "Mes", each Date.Month([DataVenda])),
+				    #"Personalização Adicionada2" = Table.AddColumn(#"Personalização Adicionada1", "Dia", each Date.Day([DataVenda])),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Personalização Adicionada2",{{"Índice", "ID_data"}}),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(#"Colunas Renomeadas",{"ID_data", "DataVenda", "Ano", "Mes", "Dia"}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Colunas Reordenadas",{{"Dia", Int64.Type}, {"Ano", Int64.Type}, {"Mes", Int64.Type}}),
+				    #"Personalização Adicionada3" = Table.AddColumn(#"Tipo Alterado1", "NomeMes", each Date.MonthName([DataVenda]))
+				in
+				    #"Personalização Adicionada3"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

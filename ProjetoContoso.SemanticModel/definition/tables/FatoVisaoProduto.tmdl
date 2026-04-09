@@ -1,0 +1,115 @@
+table FatoVisaoProduto
+	lineageTag: 955420a4-2c45-4800-8c84-e9baf02c6cec
+
+	column ID_produto
+		dataType: int64
+		formatString: 0
+		lineageTag: 58d73d16-e152-4204-ab38-1b911e295e7c
+		summarizeBy: none
+		sourceColumn: ID_produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_marca
+		dataType: int64
+		formatString: 0
+		lineageTag: dcc04e00-7d28-4f56-bee1-458c0e39ec64
+		summarizeBy: none
+		sourceColumn: ID_marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_subcategoria
+		dataType: int64
+		formatString: 0
+		lineageTag: 78a3f1ac-8707-4865-8494-102c18d85efa
+		summarizeBy: none
+		sourceColumn: ID_subcategoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_categoria
+		dataType: int64
+		formatString: 0
+		lineageTag: 3229de4e-b759-4c68-8256-6687296f0d28
+		summarizeBy: none
+		sourceColumn: ID_categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrecoUnitario
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 432f6f9e-5bc7-4cf7-9f42-5bee9abc8b06
+		summarizeBy: sum
+		sourceColumn: PrecoUnitario
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column CustoUnitario
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 81d3ce69-4eba-486c-9695-6c68778a3bda
+		summarizeBy: sum
+		sourceColumn: CustoUnitario
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column QuantidadeVendida
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b433e3a-fa6a-4c38-87ce-e4ea8918bdc1
+		summarizeBy: sum
+		sourceColumn: QuantidadeVendida
+
+		annotation SummarizationSetBy = Automatic
+
+	column Receita
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: dbe70ab1-bd7a-41c5-9a09-fe171a0f0dd8
+		summarizeBy: sum
+		sourceColumn: Receita
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column LucroBruto
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 620e635a-ee1f-442a-8af2-a2fcd17add8f
+		summarizeBy: sum
+		sourceColumn: LucroBruto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	partition FatoVisaoProduto = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("localhost", "ContosoRetailDW", [Query="SELECT #(lf)#(tab)ProductName AS Produto,#(lf)#(tab)ProductCategoryName AS Categoria,#(lf)#(tab)ProductSubcategoryName AS Subcategoria,#(lf)#(tab)BrandName AS Marca,#(lf)#(tab)fs.UnitPrice AS PrecoUnitario,#(lf)#(tab)fs.UnitCost AS CustoUnitario,#(lf)#(tab)SUM(SalesQuantity) As QuantidadeVendida,#(lf)#(tab)SUM(fs.SalesQuantity * fs.UnitPrice) AS Receita,#(lf)#(tab)SUM(fs.SalesQuantity * fs.UnitPrice) - SUM(fs.SalesQuantity * fs.UnitCost) AS LucroBruto#(lf)FROM FactSales fs#(lf)JOIN DimProduct dp ON fs.ProductKey = dp.ProductKey#(lf)JOIN DimProductSubcategory ps ON ps.ProductSubcategoryKey = dp.ProductSubcategoryKey#(lf)JOIN DimProductCategory pc ON pc.ProductCategoryKey = ps.ProductCategoryKey#(lf)GROUP BY #(lf)#(tab)ProductName,#(lf)#(tab)ProductCategoryName,#(lf)#(tab)ProductSubcategoryName,#(lf)#(tab)BrandName,#(lf)#(tab)fs.UnitPrice,#(lf)#(tab)fs.UnitCost"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"LucroBruto", Currency.Type}, {"Receita", Currency.Type}, {"CustoUnitario", Currency.Type}, {"PrecoUnitario", Currency.Type}}),
+				    #"Consultas Mescladas" = Table.NestedJoin(#"Tipo Alterado", {"Produto"}, DimProduto, {"Produto"}, "DimProduto", JoinKind.Inner),
+				    #"DimProduto Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas", "DimProduto", {"ID_produto"}, {"ID_produto"}),
+				    #"Consultas Mescladas1" = Table.NestedJoin(#"DimProduto Expandido", {"Categoria"}, DimCategoria, {"Categoria"}, "DimCategoria", JoinKind.Inner),
+				    #"DimCategoria Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas1", "DimCategoria", {"ID_categoria"}, {"ID_categoria"}),
+				    #"Consultas Mescladas2" = Table.NestedJoin(#"DimCategoria Expandido", {"Subcategoria"}, DimSubcategoria, {"Subcategoria"}, "DimSubcategoria", JoinKind.Inner),
+				    #"DimSubcategoria Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas2", "DimSubcategoria", {"ID_subcategoria"}, {"ID_subcategoria"}),
+				    #"Consultas Mescladas3" = Table.NestedJoin(#"DimSubcategoria Expandido", {"Marca"}, DimMarca, {"Marca"}, "DimMarca", JoinKind.Inner),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Consultas Mescladas3",{"Produto", "Categoria", "Subcategoria", "Marca"}),
+				    #"DimMarca Expandido" = Table.ExpandTableColumn(#"Colunas Removidas", "DimMarca", {"ID_marca"}, {"ID_marca"}),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(#"DimMarca Expandido",{"ID_produto", "ID_marca", "ID_subcategoria", "ID_categoria", "PrecoUnitario", "CustoUnitario", "QuantidadeVendida", "Receita", "LucroBruto"})
+				in
+				    #"Colunas Reordenadas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

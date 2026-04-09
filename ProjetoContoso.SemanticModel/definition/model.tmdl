@@ -1,0 +1,36 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["FatoVendas","Medidas","DimDate","DimCanal","DimLoja","DimRegiao","FatoVisaoCliente","DimCliente","DimCidade","DimPais","FatoVisaoProduto","DimProduto","DimCategoria","DimSubcategoria","DimMarca"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table FatoVendas
+ref table DateTableTemplate_cd3a5bd4-aefc-40d9-8afb-de45d771bf77
+ref table Medidas
+ref table DimDate
+ref table LocalDateTable_6efd268a-e5fe-4883-971b-1cab5ef0d14c
+ref table DimCanal
+ref table DimLoja
+ref table DimRegiao
+ref table FatoVisaoCliente
+ref table DimCliente
+ref table LocalDateTable_745081bb-68ef-4b26-bc2f-3ea4a4edcfdc
+ref table DimCidade
+ref table DimPais
+ref table Parâmetro
+ref table FatoVisaoProduto
+ref table DimProduto
+ref table DimCategoria
+ref table DimSubcategoria
+ref table DimMarca
+
+ref cultureInfo pt-BR
+

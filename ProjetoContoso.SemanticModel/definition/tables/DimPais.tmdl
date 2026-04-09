@@ -1,0 +1,38 @@
+table DimPais
+	lineageTag: 74628e85-1d16-4d32-b743-82c173ab6ac2
+
+	column ID_pais
+		dataType: int64
+		formatString: 0
+		lineageTag: 464bee49-ed22-48ac-95f8-de93e947f5b1
+		summarizeBy: none
+		sourceColumn: ID_pais
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pais
+		dataType: string
+		lineageTag: aae2829c-f373-4164-9482-9e53c46a6b04
+		summarizeBy: none
+		sourceColumn: Pais
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimPais = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("localhost", "ContosoRetailDW", [Query="SELECT#(lf)    dc.CustomerKey AS ChaveCliente,#(lf)    dc.FirstName AS PrimeiroNome,#(lf)    dc.Gender AS Genero,#(lf)    dc.BirthDate AS DataNascimento,#(lf)    dg.CityName AS Cidade,#(lf)    dg.RegionCountryName AS Pais,#(lf)    SUM(fos.SalesAmount) AS TotalGasto,#(lf)    COUNT(fos.SalesOrderNumber) AS NumeroDeCompras#(lf)FROM FactOnlineSales fos#(lf)JOIN DimCustomer dc ON dc.CustomerKey  = fos.CustomerKey#(lf)JOIN DimGeography dg ON dg.GeographyKey = dc.GeographyKey#(lf)GROUP BY#(lf)    dc.CustomerKey,#(lf)    dc.FirstName,#(lf)    dc.Gender,#(lf)    dc.BirthDate,#(lf)    dg.CityName,#(lf)    dg.RegionCountryName"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"DataNascimento", type date}, {"TotalGasto", Currency.Type}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado",{"Pais"}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Outras Colunas Removidas"),
+				    #"Índice Adicionado" = Table.AddIndexColumn(#"Duplicatas Removidas", "Índice", 11, 324, Int64.Type),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(#"Índice Adicionado",{"Índice", "Pais"}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Colunas Reordenadas",{{"Índice", "ID_pais"}})
+				in
+				    #"Colunas Renomeadas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

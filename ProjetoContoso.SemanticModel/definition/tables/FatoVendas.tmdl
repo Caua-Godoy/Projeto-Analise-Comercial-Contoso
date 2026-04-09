@@ -1,0 +1,99 @@
+table FatoVendas
+	lineageTag: e2170383-249d-4872-8ba6-f31202716b16
+
+	column ReceitaBruta
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 3e771294-8f5c-44e2-84c1-4280e4300c79
+		summarizeBy: sum
+		sourceColumn: ReceitaBruta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-US"}
+
+	column Custo
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 87cd36b1-b5f9-47f3-a2c7-fe5d7d2ce153
+		summarizeBy: sum
+		sourceColumn: Custo
+
+		annotation SummarizationSetBy = Automatic
+
+	column LucroBruto
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: d9863470-6f95-4c9f-bb73-2368f18b4af7
+		summarizeBy: sum
+		sourceColumn: LucroBruto
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuantidadeVendida
+		dataType: int64
+		formatString: #,0
+		lineageTag: 1d12efdd-8595-44eb-bd3d-10e7374622c6
+		summarizeBy: sum
+		sourceColumn: QuantidadeVendida
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_data
+		dataType: int64
+		formatString: 0
+		lineageTag: 9aa3405f-8ed4-499d-bf29-16d6bd01ea51
+		summarizeBy: none
+		sourceColumn: ID_data
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_canal
+		dataType: int64
+		formatString: 0
+		lineageTag: 220502df-f8e2-4837-a45b-24838b2c5bda
+		summarizeBy: none
+		sourceColumn: ID_canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_loja
+		dataType: int64
+		formatString: 0
+		lineageTag: efc1321e-6067-4cfc-a301-b656fd517c5f
+		summarizeBy: none
+		sourceColumn: ID_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_regiao
+		dataType: int64
+		formatString: 0
+		lineageTag: 69bc9718-5215-44a7-a6fc-0adc10e88d2d
+		summarizeBy: none
+		sourceColumn: ID_regiao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FatoVendas = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("localhost", "ContosoRetailDW", [Query="SELECT #(lf)#(tab)CAST(fs.DateKey AS date) AS DataVenda,#(lf)#(tab)fs.SalesQuantity * fs.UnitPrice AS ReceitaBruta,#(lf)#(tab)fs.SalesQuantity * fs.UnitCost AS Custo,#(lf)#(tab)fs.SalesQuantity * fs.UnitPrice - fs.SalesQuantity * fs.UnitCost AS LucroBruto,#(lf)#(tab)SalesQuantity AS QuantidadeVendida,#(lf)#(tab)ChannelName AS Canal,#(lf)#(tab)StoreName AS Loja,#(lf)#(tab)RegionCountryName AS Regiao#(lf)FROM FactSales fs#(lf)JOIN DimChannel dc ON dc.ChannelKey = fs.channelKey#(lf)JOIN DimStore ds ON ds.StoreKey = fs.StoreKey#(lf)JOIN DimGeography dg ON dg.GeographyKey = ds.GeographyKey"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"DataVenda", type date}, {"ReceitaBruta", Currency.Type}, {"Custo", Currency.Type}, {"LucroBruto", Currency.Type}}),
+				    #"Consultas Mescladas" = Table.NestedJoin(#"Tipo Alterado", {"DataVenda"}, DimDate, {"DataVenda"}, "DimDate", JoinKind.Inner),
+				    #"DimDate Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas", "DimDate", {"ID_data"}, {"ID_data"}),
+				    #"Consultas Mescladas1" = Table.NestedJoin(#"DimDate Expandido", {"Canal"}, DimCanal, {"Canal"}, "DimCanal", JoinKind.Inner),
+				    #"DimCanal Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas1", "DimCanal", {"ID_canal"}, {"ID_canal"}),
+				    #"Consultas Mescladas2" = Table.NestedJoin(#"DimCanal Expandido", {"Loja"}, DimLoja, {"Loja"}, "DimLoja", JoinKind.Inner),
+				    #"DimLoja Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas2", "DimLoja", {"ID_loja"}, {"ID_loja"}),
+				    #"Consultas Mescladas3" = Table.NestedJoin(#"DimLoja Expandido", {"Regiao"}, DimRegiao, {"Regiao"}, "DimRegiao", JoinKind.Inner),
+				    #"DimRegiao Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas3", "DimRegiao", {"ID_regiao"}, {"ID_regiao"}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"DimRegiao Expandido",{"DataVenda", "Canal", "Loja", "Regiao"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

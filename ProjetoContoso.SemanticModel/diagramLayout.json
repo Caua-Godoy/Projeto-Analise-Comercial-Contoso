@@ -1,0 +1,230 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 587.02868702183434,
+        "y": 25.140414861748795
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1148.951167,
+            "y": 25
+          },
+          "nodeIndex": "Medidas",
+          "nodeLineageTag": "f82c6830-a781-4ed4-892c-f4e67057f72d",
+          "size": {
+            "height": 314.89865511519224,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 524.34941409831936,
+            "y": 664.53125694156665
+          },
+          "nodeIndex": "FatoVendas",
+          "nodeLineageTag": "e2170383-249d-4872-8ba6-f31202716b16",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 136.15533621779713
+          },
+          "nodeIndex": "DimCanal",
+          "nodeLineageTag": "53ebe120-b293-42f0-b746-7eb74861096d",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 100.15533621779713
+          },
+          "nodeIndex": "DimDate",
+          "nodeLineageTag": "5f124746-0d4c-4a93-8fb3-0f878188f3b0",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 577.86533203067233,
+            "y": 92.46600865339137
+          },
+          "nodeIndex": "DimLoja",
+          "nodeLineageTag": "5d8ea9ae-b041-4945-a2a7-749de33dd5f9",
+          "size": {
+            "height": 194.23865792022809,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 136.15533621779713
+          },
+          "nodeIndex": "DimRegiao",
+          "nodeLineageTag": "e3591bcb-267a-411a-b847-f5e82cc30b97",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1359.2134719876583,
+            "y": 458.8150830054899
+          },
+          "nodeIndex": "DimCidade",
+          "nodeLineageTag": "99fb4b3b-0e92-436f-b38c-09641d9b1954",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1072.7361159814875,
+            "y": 440.93506240881862
+          },
+          "nodeIndex": "DimCliente",
+          "nodeLineageTag": "0c9187e8-fe57-4973-ab0f-3b1f0a449022",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1695.2430717066186,
+            "y": 477.48352791592407
+          },
+          "nodeIndex": "DimPais",
+          "nodeLineageTag": "74628e85-1d16-4d32-b743-82c173ab6ac2",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1234.5886929839205,
+            "y": 772.82879171454181
+          },
+          "nodeIndex": "FatoVisaoCliente",
+          "nodeLineageTag": "c9a2d713-834e-4f17-8db8-b1732b643c7a",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1979.2430717066186,
+            "y": 422.9143958572709
+          },
+          "nodeIndex": "Parâmetro",
+          "nodeLineageTag": "bc04789a-aa9c-4ffc-8812-83f96dee5305",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2910.0517306222391,
+            "y": 469.17081805425414
+          },
+          "nodeIndex": "DimCategoria",
+          "nodeLineageTag": "c79215f6-dc56-4a3c-921c-c01ae41cf7de",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2687.6105132215489,
+            "y": 649.14732317485607
+          },
+          "nodeIndex": "DimMarca",
+          "nodeLineageTag": "06d54f3e-cbeb-494d-b507-c861b86de0c7",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2313.2430717066186,
+            "y": 300.651328098946
+          },
+          "nodeIndex": "DimProduto",
+          "nodeLineageTag": "c568d212-b939-4884-8601-0fad02c2c5ce",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2533.096679430058,
+            "y": 120.68146853968574
+          },
+          "nodeIndex": "DimSubcategoria",
+          "nodeLineageTag": "498b5e9a-42e2-42fe-8108-4a8b7cb5b9c8",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2609.2914872777155,
+            "y": 300.98942250485118
+          },
+          "nodeIndex": "FatoVisaoProduto",
+          "nodeLineageTag": "955420a4-2c45-4800-8c84-e9baf02c6cec",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 79.553182037699983,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

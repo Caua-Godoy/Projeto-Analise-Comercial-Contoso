@@ -1,0 +1,83 @@
+table DimCliente
+	lineageTag: 0c9187e8-fe57-4973-ab0f-3b1f0a449022
+
+	column ID_cliente
+		dataType: int64
+		formatString: 0
+		lineageTag: d96f3654-66f6-4eb4-bfec-943c638695db
+		summarizeBy: none
+		sourceColumn: ID_cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrimeiroNome
+		dataType: string
+		lineageTag: 737e1c57-2ffd-482a-8495-3b7dd8f99869
+		summarizeBy: none
+		sourceColumn: PrimeiroNome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Genero
+		dataType: string
+		lineageTag: 91332b67-bedb-46e1-80d6-ff746bf10658
+		summarizeBy: none
+		sourceColumn: Genero
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataNascimento
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: ecc9cb56-c432-481f-a4ff-71851dd77898
+		summarizeBy: none
+		sourceColumn: DataNascimento
+
+		variation Variation
+			isDefault
+			relationship: ac1934f0-976f-42fc-a566-78cba07b7b41
+			defaultHierarchy: LocalDateTable_745081bb-68ef-4b26-bc2f-3ea4a4edcfdc.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Idade
+		dataType: string
+		lineageTag: ce32f9bf-5cd6-4a67-a044-bfdee048e940
+		summarizeBy: none
+		sourceColumn: Idade
+
+		annotation SummarizationSetBy = Automatic
+
+	column FaixaEtaria
+		dataType: string
+		lineageTag: 959b5557-9e87-461e-8345-c54fbf391c8c
+		summarizeBy: none
+		sourceColumn: FaixaEtaria
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCliente = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("localhost", "ContosoRetailDW", [Query="SELECT#(lf)    dc.CustomerKey AS ChaveCliente,#(lf)    dc.FirstName AS PrimeiroNome,#(lf)    dc.Gender AS Genero,#(lf)    dc.BirthDate AS DataNascimento,#(lf)    dg.CityName AS Cidade,#(lf)    dg.RegionCountryName AS Pais,#(lf)    SUM(fos.SalesAmount) AS TotalGasto,#(lf)    COUNT(fos.SalesOrderNumber) AS NumeroDeCompras#(lf)FROM FactOnlineSales fos#(lf)JOIN DimCustomer dc ON dc.CustomerKey  = fos.CustomerKey#(lf)JOIN DimGeography dg ON dg.GeographyKey = dc.GeographyKey#(lf)GROUP BY#(lf)    dc.CustomerKey,#(lf)    dc.FirstName,#(lf)    dc.Gender,#(lf)    dc.BirthDate,#(lf)    dg.CityName,#(lf)    dg.RegionCountryName"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"DataNascimento", type date}, {"TotalGasto", Currency.Type}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado",{"ChaveCliente", "PrimeiroNome", "Genero", "DataNascimento"}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Outras Colunas Removidas", {"ChaveCliente"}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Duplicatas Removidas",{{"ChaveCliente", "ID_cliente"}}),
+				    #"Linhas Classificadas" = Table.Sort(#"Colunas Renomeadas",{{"DataNascimento", Order.Ascending}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Linhas Classificadas", each [DataNascimento] <> null and [DataNascimento] <> ""),
+				    #"Personalização Adicionada" = Table.AddColumn(#"Linhas Filtradas", "Idade", each 2009 - Date.Year([DataNascimento])),
+				    #"Coluna Condicional Adicionada" = Table.AddColumn(#"Personalização Adicionada", "FaixaEtaria", each if [Idade] <= 17 then "Adolescente" else if [Idade] <= 24 then "Jovem" else if [Idade] <= 44 then "Adulto" else if [Idade] <= 59 then "Meia-Idade" else if [Idade] <= 99 then "Idoso" else null),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Coluna Condicional Adicionada","F","Feminino",Replacer.ReplaceText,{"Genero"}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído","M","Masculino",Replacer.ReplaceText,{"Genero"}),
+				    #"Linhas em Branco Removidas" = Table.SelectRows(#"Valor Substituído1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+				in
+				    #"Linhas em Branco Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

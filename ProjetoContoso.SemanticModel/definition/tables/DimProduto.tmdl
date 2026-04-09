@@ -1,0 +1,39 @@
+table DimProduto
+	lineageTag: c568d212-b939-4884-8601-0fad02c2c5ce
+
+	column ID_produto
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ea8d149-f163-474c-a136-bc1629d91845
+		summarizeBy: none
+		sourceColumn: ID_produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Produto
+		dataType: string
+		lineageTag: 433fe989-1733-478b-b9d8-85062186f636
+		summarizeBy: none
+		sourceColumn: Produto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimProduto = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("localhost", "ContosoRetailDW", [Query="SELECT #(lf)#(tab)ProductName AS Produto,#(lf)#(tab)ProductCategoryName AS Categoria,#(lf)#(tab)ProductSubcategoryName AS Subcategoria,#(lf)#(tab)BrandName AS Marca,#(lf)#(tab)fs.UnitPrice AS PrecoUnitario,#(lf)#(tab)fs.UnitCost AS CustoUnitario,#(lf)#(tab)SUM(SalesQuantity) As QuantidadeVendida,#(lf)#(tab)SUM(fs.SalesQuantity * fs.UnitPrice) AS Receita,#(lf)#(tab)SUM(fs.SalesQuantity * fs.UnitPrice) - SUM(fs.SalesQuantity * fs.UnitCost) AS LucroBruto#(lf)FROM FactSales fs#(lf)JOIN DimProduct dp ON fs.ProductKey = dp.ProductKey#(lf)JOIN DimProductSubcategory ps ON ps.ProductSubcategoryKey = dp.ProductSubcategoryKey#(lf)JOIN DimProductCategory pc ON pc.ProductCategoryKey = ps.ProductCategoryKey#(lf)GROUP BY #(lf)#(tab)ProductName,#(lf)#(tab)ProductCategoryName,#(lf)#(tab)ProductSubcategoryName,#(lf)#(tab)BrandName,#(lf)#(tab)fs.UnitPrice,#(lf)#(tab)fs.UnitCost"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"LucroBruto", Currency.Type}, {"Receita", Currency.Type}, {"CustoUnitario", Currency.Type}, {"PrecoUnitario", Currency.Type}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado",{"Produto"}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Outras Colunas Removidas"),
+				    #"Erros Removidos" = Table.RemoveRowsWithErrors(#"Duplicatas Removidas", {"Produto"}),
+				    #"Índice Adicionado" = Table.AddIndexColumn(#"Erros Removidos", "Índice", 234, 342, Int64.Type),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(#"Índice Adicionado",{"Índice", "Produto"}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Colunas Reordenadas",{{"Índice", "ID_produto"}})
+				in
+				    #"Colunas Renomeadas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,38 @@
+table DimLoja
+	lineageTag: 5d8ea9ae-b041-4945-a2a7-749de33dd5f9
+
+	column ID_loja
+		dataType: int64
+		formatString: 0
+		lineageTag: bad5aeea-811e-4470-9e2f-a2f59530ace0
+		summarizeBy: none
+		sourceColumn: ID_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loja
+		dataType: string
+		lineageTag: e8127149-f88a-4772-a061-1686cabbdbbd
+		summarizeBy: none
+		sourceColumn: Loja
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimLoja = m
+		mode: import
+		source =
+				let
+				    Fonte = Sql.Database("localhost", "ContosoRetailDW", [Query="SELECT #(lf)#(tab)CAST(fs.DateKey AS date) AS DataVenda,#(lf)#(tab)fs.SalesQuantity * fs.UnitPrice AS ReceitaBruta,#(lf)#(tab)fs.SalesQuantity * fs.UnitCost AS Custo,#(lf)#(tab)fs.SalesQuantity * fs.UnitPrice - fs.SalesQuantity * fs.UnitCost AS LucroBruto,#(lf)#(tab)SalesQuantity AS QuantidadeVendida,#(lf)#(tab)ChannelName AS Canal,#(lf)#(tab)StoreName AS Loja,#(lf)#(tab)RegionCountryName AS Regiao#(lf)FROM FactSales fs#(lf)JOIN DimChannel dc ON dc.ChannelKey = fs.channelKey#(lf)JOIN DimStore ds ON ds.StoreKey = fs.StoreKey#(lf)JOIN DimGeography dg ON dg.GeographyKey = ds.GeographyKey"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"DataVenda", type date}, {"ReceitaBruta", Currency.Type}, {"Custo", Currency.Type}, {"LucroBruto", Currency.Type}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado",{"Loja"}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Outras Colunas Removidas"),
+				    #"Índice Adicionado" = Table.AddIndexColumn(#"Duplicatas Removidas", "Índice", 132, 67, Int64.Type),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Índice Adicionado",{{"Índice", "ID_loja"}}),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(#"Colunas Renomeadas",{"ID_loja", "Loja"})
+				in
+				    #"Colunas Reordenadas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

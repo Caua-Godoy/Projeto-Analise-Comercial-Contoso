@@ -1,0 +1,58 @@
+relationship 6733f8bf-eb32-4db4-a32d-2c1952dacc81
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.DataVenda
+	toColumn: LocalDateTable_6efd268a-e5fe-4883-971b-1cab5ef0d14c.Date
+
+relationship AutoDetected_69a99ad0-64f3-42b0-9bbc-28e2d40daba7
+	fromColumn: FatoVendas.ID_data
+	toColumn: DimDate.ID_data
+
+relationship AutoDetected_89063b86-6540-4414-aa40-0e36be6c315a
+	fromColumn: FatoVendas.ID_regiao
+	toColumn: DimRegiao.ID_regiao
+
+relationship b3801637-4ab1-75e5-dfac-e5b6e74efb17
+	fromColumn: FatoVendas.ID_canal
+	toColumn: DimCanal.ID_canal
+
+relationship d38d8b77-9ee1-c5d4-4c88-63b593641a04
+	fromColumn: FatoVendas.ID_loja
+	toColumn: DimLoja.ID_loja
+
+relationship ac1934f0-976f-42fc-a566-78cba07b7b41
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimCliente.DataNascimento
+	toColumn: LocalDateTable_745081bb-68ef-4b26-bc2f-3ea4a4edcfdc.Date
+
+relationship bfb739d5-7444-2c67-c4cc-536f6b300000
+	fromColumn: FatoVisaoCliente.ID_pais
+	toColumn: DimPais.ID_pais
+
+relationship d641270a-6ba1-a8a5-95be-516f4c8ee20a
+	fromColumn: FatoVisaoCliente.ID_cidade
+	toColumn: DimCidade.ID_cidade
+
+relationship AutoDetected_133dd312-eff0-4306-8a06-a806abe29794
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: DimCliente.ID_cliente
+	toColumn: FatoVisaoCliente.ID_cliente
+
+relationship AutoDetected_488bb812-527b-400f-ba3e-5d7d5c0207c1
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: DimProduto.ID_produto
+	toColumn: FatoVisaoProduto.ID_produto
+
+relationship AutoDetected_d2d878cf-5d58-4065-ae16-62b9d7d06eef
+	fromColumn: FatoVisaoProduto.ID_marca
+	toColumn: DimMarca.ID_marca
+
+relationship AutoDetected_a14b7766-46d7-4397-b07c-9d889f3822ae
+	fromColumn: FatoVisaoProduto.ID_subcategoria
+	toColumn: DimSubcategoria.ID_subcategoria
+
+relationship AutoDetected_6b3bb996-f0db-464f-9071-b842741629e7
+	fromColumn: FatoVisaoProduto.ID_categoria
+	toColumn: DimCategoria.ID_categoria
+

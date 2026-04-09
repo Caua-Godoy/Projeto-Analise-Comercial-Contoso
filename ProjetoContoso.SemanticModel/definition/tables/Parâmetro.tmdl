@@ -1,0 +1,48 @@
+table Parâmetro
+	lineageTag: bc04789a-aa9c-4ffc-8812-83f96dee5305
+
+	column Parâmetro
+		lineageTag: c2bc59c1-3efe-4db1-97bd-7a6eaf97cd6e
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parâmetro Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'Parâmetro Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parâmetro Campos'
+		isHidden
+		lineageTag: c689dde4-b045-456e-8e0e-d480af69f666
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parâmetro Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parâmetro Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: 27d82b25-ff77-402f-ba6e-14800b2f7acf
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Parâmetro = calculated
+		mode: import
+		source =
+				{
+				    ("NumeroDeCompras", NAMEOF([NumeroDeCompras Wrapper]), 0),
+				    ("TotalGasto", NAMEOF([TotalGasto Wrapper]), 1)
+				}
+
+	annotation PBI_Id = 37cb1f6528674beeb976f77a01ecf4cf
+

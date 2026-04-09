@@ -1,0 +1,57 @@
+table Medidas
+	lineageTag: f82c6830-a781-4ed4-892c-f4e67057f72d
+
+	measure QuantidadePedidos = COUNTROWS(FatoVendas)
+		formatString: 0
+		lineageTag: d976c38b-eac5-4951-b70c-44112993f0d2
+
+	measure MargemLucro = DIVIDE(SUM(FatoVendas[LucroBruto]),SUM(FatoVendas[ReceitaBruta]),0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: acf35008-ae17-4af8-b2a9-867ac8d3614b
+
+	measure TicketMedio = DIVIDE(SUM(FatoVendas[ReceitaBruta]),[QuantidadePedidos],0)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 28db8819-18e6-468b-8d53-abf82af46bba
+
+	measure TotalClienteUnicos = DISTINCTCOUNT(DimCliente[ID_cliente])
+		formatString: 0
+		lineageTag: 31321cbe-3a24-4571-8eac-19907a16a8c8
+
+	measure MediaComprasPorCliente = DIVIDE(SUM(FatoVisaoCliente[NumeroDeCompras]),[TotalClienteUnicos])
+		formatString: 0
+		lineageTag: 80461c06-2f14-4d9c-a5d7-b30d7f8f8834
+
+	measure MediaGastoPorCliente = DIVIDE(SUM(FatoVisaoCliente[TotalGasto]),DISTINCTCOUNT(FatoVisaoCliente[ID_cliente]))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 287a912b-b7f6-4844-90e4-382ca3daf2bc
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-US"}
+
+	measure 'TotalGasto Wrapper' = SUM(FatoVisaoCliente[TotalGasto])
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 8e94689c-0ccd-4b3e-a5cf-b0fd2b290cdb
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'NumeroDeCompras Wrapper' = SUM(FatoVisaoCliente[NumeroDeCompras])
+		formatString: 0
+		lineageTag: 57bf092a-5b42-4b11-aabb-700c587f4c2a
+
+	measure Margem%Produto = DIVIDE(SUM(FatoVisaoProduto[LucroBruto]), SUM(FatoVisaoProduto[Receita]))
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: da87f690-db5f-4ef6-8589-8a09284e1eda
+
+	partition Medidas = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Tipo Alterado",{"Coluna 1"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+
