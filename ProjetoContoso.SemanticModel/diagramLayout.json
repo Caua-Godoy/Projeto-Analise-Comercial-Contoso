@@ -4,8 +4,8 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 587.02868702183434,
-        "y": 25.140414861748795
+        "x": 215.62797152755033,
+        "y": 393.20394807965062
       },
       "nodes": [
         {
@@ -19,7 +19,7 @@
             "height": 314.89865511519224,
             "width": 234
           },
-          "zIndex": 1
+          "zIndex": 6
         },
         {
           "location": {
@@ -32,7 +32,7 @@
             "height": 272,
             "width": 234
           },
-          "zIndex": 2
+          "zIndex": 7
         },
         {
           "location": {
@@ -45,7 +45,7 @@
             "height": 145,
             "width": 234
           },
-          "zIndex": 3
+          "zIndex": 8
         },
         {
           "location": {
@@ -58,7 +58,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 4
+          "zIndex": 9
         },
         {
           "location": {
@@ -71,7 +71,7 @@
             "height": 194.23865792022809,
             "width": 234
           },
-          "zIndex": 5
+          "zIndex": 10
         },
         {
           "location": {
@@ -84,7 +84,7 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 6
+          "zIndex": 11
         },
         {
           "location": {
@@ -97,7 +97,7 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 7
+          "zIndex": 12
         },
         {
           "location": {
@@ -110,7 +110,7 @@
             "height": 176,
             "width": 234
           },
-          "zIndex": 8
+          "zIndex": 13
         },
         {
           "location": {
@@ -123,7 +123,7 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 9
+          "zIndex": 14
         },
         {
           "location": {
@@ -136,7 +136,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 10
+          "zIndex": 15
         },
         {
           "location": {
@@ -149,12 +149,12 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
-            "x": 2910.0517306222391,
-            "y": 469.17081805425414
+            "x": 1133.7012693981576,
+            "y": 1464.0526134748086
           },
           "nodeIndex": "DimCategoria",
           "nodeLineageTag": "c79215f6-dc56-4a3c-921c-c01ae41cf7de",
@@ -162,12 +162,12 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
-            "x": 2687.6105132215489,
-            "y": 649.14732317485607
+            "x": 1507.5614435744558,
+            "y": 1411.7854187180571
           },
           "nodeIndex": "DimMarca",
           "nodeLineageTag": "06d54f3e-cbeb-494d-b507-c861b86de0c7",
@@ -175,12 +175,12 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 3
         },
         {
           "location": {
-            "x": 2313.2430717066186,
-            "y": 300.651328098946
+            "x": 737.75202659268052,
+            "y": 1458.731399108992
           },
           "nodeIndex": "DimProduto",
           "nodeLineageTag": "c568d212-b939-4884-8601-0fad02c2c5ce",
@@ -188,12 +188,12 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 16
         },
         {
           "location": {
-            "x": 2533.096679430058,
-            "y": 120.68146853968574
+            "x": 185.55225364275611,
+            "y": 1492.1746691667593
           },
           "nodeIndex": "DimSubcategoria",
           "nodeLineageTag": "498b5e9a-42e2-42fe-8108-4a8b7cb5b9c8",
@@ -201,12 +201,12 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 4
         },
         {
           "location": {
-            "x": 2609.2914872777155,
-            "y": 300.98942250485118
+            "x": 748.203459882167,
+            "y": 978.88995187658509
           },
           "nodeIndex": "FatoVisaoProduto",
           "nodeLineageTag": "955420a4-2c45-4800-8c84-e9baf02c6cec",
@@ -214,11 +214,11 @@
             "height": 296,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 5
         }
       ],
       "name": "Todas as tabelas",
-      "zoomValue": 79.553182037699983,
+      "zoomValue": 63.287087723234222,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

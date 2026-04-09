@@ -216,5 +216,51 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2552875b811625ba4e08",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimCliente"
+              }
+            },
+            "Property": "Genero"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "9af92b6848545482bbbf",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimCliente"
+              }
+            },
+            "Property": "FaixaEtaria"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2e85411f252d1d2eb425",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "NumeroDeCompras Wrapper"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

@@ -168,42 +168,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "22584cdbcfe55fb5a531",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "DimCategoria"
-              }
-            },
-            "Property": "Categoria"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "67ebf6aeaf9329e86150",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "FatoVisaoProduto"
-                  }
-                },
-                "Property": "Receita"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -144,6 +144,13 @@
                   "Value": "false"
                 }
               }
+            },
+            "logAxisScale": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
@@ -156,7 +163,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'%Margem de Produto e Quantidade Vendida Por Categoria'"
+                  "Value": "'%Margem de Lucro e Quantidade Vendida Por Categoria'"
                 }
               }
             },
@@ -189,7 +196,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "582d77ae3af539c30e6e",
+        "name": "a36adc69089032b14829",
         "field": {
           "Column": {
             "Expression": {
@@ -203,7 +210,7 @@
         "type": "Categorical"
       },
       {
-        "name": "ff99edacf4d463349c4e",
+        "name": "d475bcd158c73fc5e56f",
         "field": {
           "Aggregation": {
             "Expression": {
@@ -222,7 +229,7 @@
         "type": "Advanced"
       },
       {
-        "name": "8f342145bd9c0fda77b6",
+        "name": "5be3d07d7eb7bbff4fd0",
         "field": {
           "Measure": {
             "Expression": {

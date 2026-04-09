@@ -70,5 +70,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ab32575808a228453b95",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimRegiao"
+              }
+            },
+            "Property": "Regiao"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

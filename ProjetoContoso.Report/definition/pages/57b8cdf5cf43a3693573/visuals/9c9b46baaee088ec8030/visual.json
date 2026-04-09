@@ -230,5 +230,56 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7d77ac75d5a2a7eeab18",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimDate"
+              }
+            },
+            "Property": "NomeMes"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "cd79835007537688d750",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimDate"
+              }
+            },
+            "Property": "Ano"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2b39e3e405b1cd03f6e0",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FatoVendas"
+                  }
+                },
+                "Property": "ReceitaBruta"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

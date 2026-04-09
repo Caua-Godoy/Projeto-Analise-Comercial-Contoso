@@ -296,25 +296,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "bfa65e834c82ba88bfa9",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "FatoVisaoProduto"
-                  }
-                },
-                "Property": "QuantidadeVendida"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

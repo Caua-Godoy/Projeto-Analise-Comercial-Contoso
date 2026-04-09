@@ -143,8 +143,60 @@
             }
           }
         }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Cliente por Pais'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "069489a416b72e82abab",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimPais"
+              }
+            },
+            "Property": "Pais"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d21cd846052e76d2b95e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "TotalClienteUnicos"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

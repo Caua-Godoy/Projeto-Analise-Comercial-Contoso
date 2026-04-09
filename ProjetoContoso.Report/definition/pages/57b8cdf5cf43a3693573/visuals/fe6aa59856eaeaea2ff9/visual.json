@@ -163,5 +163,42 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "cc0953851e66d182915a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimRegiao"
+              }
+            },
+            "Property": "Regiao"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "cd39233e58fc988b8900",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FatoVendas"
+                  }
+                },
+                "Property": "ReceitaBruta"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

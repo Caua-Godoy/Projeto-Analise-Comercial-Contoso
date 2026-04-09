@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "ce2cd18b059aaecfb840",
+  "name": "2cfe0353514265635532",
   "position": {
-    "x": 7.7777777777777777,
-    "y": 217.77777777777777,
-    "z": 9000,
-    "height": 76.666666666666671,
-    "width": 116.66666666666666,
-    "tabOrder": 9000
+    "x": 7.5,
+    "y": 282.5,
+    "z": 11001,
+    "height": 77.5,
+    "width": 117.5,
+    "tabOrder": 11001
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "DimCliente"
+                      "Entity": "DimPais"
                     }
                   },
-                  "Property": "FaixaEtaria"
+                  "Property": "Pais"
                 }
               },
-              "queryRef": "DimCliente.FaixaEtaria",
-              "nativeQueryRef": "FaixaEtaria",
+              "queryRef": "DimPais.Pais",
+              "nativeQueryRef": "Pais",
               "active": true
             }
           ]
@@ -82,15 +82,15 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "8974b4f7505745238190",
+        "name": "040697f927b21b6020a8",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "DimCliente"
+                "Entity": "DimPais"
               }
             },
-            "Property": "FaixaEtaria"
+            "Property": "Pais"
           }
         },
         "type": "Categorical"

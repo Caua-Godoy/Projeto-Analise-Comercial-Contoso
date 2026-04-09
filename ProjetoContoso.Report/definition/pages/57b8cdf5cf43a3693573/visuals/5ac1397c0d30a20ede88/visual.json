@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "ce2cd18b059aaecfb840",
+  "name": "5ac1397c0d30a20ede88",
   "position": {
-    "x": 7.7777777777777777,
-    "y": 217.77777777777777,
-    "z": 9000,
-    "height": 76.666666666666671,
-    "width": 116.66666666666666,
-    "tabOrder": 9000
+    "x": 12.5,
+    "y": 282.5,
+    "z": 12001,
+    "height": 77.5,
+    "width": 116.25,
+    "tabOrder": 12001
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "DimCliente"
+                      "Entity": "DimDate"
                     }
                   },
-                  "Property": "FaixaEtaria"
+                  "Property": "Ano"
                 }
               },
-              "queryRef": "DimCliente.FaixaEtaria",
-              "nativeQueryRef": "FaixaEtaria",
+              "queryRef": "DimDate.Ano",
+              "nativeQueryRef": "Ano",
               "active": true
             }
           ]
@@ -50,15 +50,7 @@
       ],
       "general": [
         {
-          "properties": {
-            "orientation": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
+          "properties": {}
         }
       ]
     },
@@ -82,18 +74,18 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "8974b4f7505745238190",
+        "name": "9bcdeff6c5e32688d22a",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "DimCliente"
+                "Entity": "DimDate"
               }
             },
-            "Property": "FaixaEtaria"
+            "Property": "Ano"
           }
         },
-        "type": "Categorical"
+        "type": "Advanced"
       }
     ]
   }
